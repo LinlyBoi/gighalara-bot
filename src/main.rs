@@ -26,7 +26,7 @@ impl EventHandler for Handler {
         }
         if msg.content == "hello"
         {
-            if let Err(why) = message.channel_id.say(&ctx.http, "https://www.nohello.com/")
+            if let Err(why) = message.channel_id.say(&ctx.http, "https://www.nohello.com/");
         }
     }
 
