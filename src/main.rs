@@ -23,6 +23,13 @@ impl EventHandler for Handler {
         {
             phrase = "https://dontasktoask.com/".to_string();
         }
+        else if msg.content == "!help"
+        {
+            let dm = msg.author.dm(&ctx, |m| m.content("I hate you")).await;
+            if let Err(why) = dm {
+                println!("Couldn't dm the noob: {:?}", why);
+            }
+        }
             // Sending a message can fail, due to a network error, an
             // authentication error, or lack of permissions to post in the
             // channel, so log to stdout when some error happens, with a
