@@ -81,15 +81,16 @@ async fn main() {
     }
 }
 fn get_response(txt: &str) -> String {
-    match txt {
+    //hard coded for now but will change later pls no bully
+    const CRING_WORDS: [&str; 3] = ["arch btw","garuda","dragon ball legends"];
+    for cring in CRING_WORDS {
+    if txt.to_lowercase().contains(&cring) {
+    return "you just posted cringe".to_string();
+        } 
+    }
+    match txt.to_ascii_lowercase().as_str() {
         "hello" | "hi" | "hey" => return "https://nohello.com".to_string(),
         "help" | "can anyone help?" | "helppp" => return "https://dontasktoask.com".to_string(),
-        "arch btw" | "I use arch btw" => return "no one fucking cares".to_string(),
-        "I am so good at dragon ball legends" => return "dragon ball fans can't fucking read lmao".to_string(), //friend suggestion 
-        "ya ged3an" => return "SHUT THE FUCK UP".to_string(),
-        
         _ => return "not pog".to_string(),
     }
-
-
 }
