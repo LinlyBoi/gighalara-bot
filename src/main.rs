@@ -16,7 +16,7 @@ impl EventHandler for Handler {
     // events can be dispatched simultaneously.
     async fn message(&self, ctx: Context, msg: Message) {
         let text = msg.content.to_string();
-        let phrase = ungabunga(&text);
+        let phrase = get_response(&text);
         
         // This code was written by idiot (me)
         // if msg.content == "hello" {
@@ -80,11 +80,14 @@ async fn main() {
         println!("Client error: {:?}", why);
     }
 }
-fn ungabunga(txt: &str) -> String {
+fn get_response(txt: &str) -> String {
     match txt {
         "hello" | "hi" | "hey" => return "https://nohello.com".to_string(),
         "help" | "can anyone help?" | "helppp" => return "https://dontasktoask.com".to_string(),
         "arch btw" | "I use arch btw" => return "no one fucking cares".to_string(),
+        "I am so good at dragon ball legends" => return "dragon ball fans can't fucking read lmao".to_string(), //friend suggestion 
+        "ya ged3an" => return "SHUT THE FUCK UP".to_string(),
+        
         _ => return "not pog".to_string(),
     }
 
