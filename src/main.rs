@@ -84,6 +84,7 @@ fn ungabunga(txt: &str) -> String {
     match txt {
         "hello" | "hi" | "hey" => return "https://nohello.com".to_string(),
         "help" | "can anyone help?" | "helppp" => return "https://dontasktoask.com".to_string(),
+        "arch btw" | "I use arch btw" => return "no one fucking cares".to_string(),
         _ => return "not pog".to_string(),
     }
 
