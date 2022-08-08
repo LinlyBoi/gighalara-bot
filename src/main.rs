@@ -15,15 +15,18 @@ impl EventHandler for Handler {
     // Event handlers are dispatched through a threadpool, and so multiple
     // events can be dispatched simultaneously.
     async fn message(&self, ctx: Context, msg: Message) {
-        let mut phrase = String::from("not pog");
-        if msg.content == "hello" {
-            phrase = "http://nohello.com".to_string();
-        }
-        else if msg.content == "help"
-        {
-            phrase = "https://dontasktoask.com/".to_string();
-        }
-        else if msg.content == "!help"
+        let text = msg.content.to_string();
+        let phrase = ungabunga(&text);
+        
+        // This code was written by idiot (me)
+        // if msg.content == "hello" {
+        //     phrase = "http://nohello.com".to_string();
+        // }
+        // else if msg.content == "help"
+        // {
+        //     phrase = "https://dontasktoask.com/".to_string();
+        // }
+        if msg.content == "!help"
         {
             let dm = msg.author.dm(&ctx, |m| m.content("I hate you")).await;
             if let Err(why) = dm {
@@ -76,4 +79,13 @@ async fn main() {
     if let Err(why) = client.start().await {
         println!("Client error: {:?}", why);
     }
+}
+fn ungabunga(txt: &str) -> String {
+    match txt {
+        "hello" | "hi" | "hey" => return "https://nohello.com".to_string(),
+        "help" | "can anyone help?" | "helppp" => return "https://dontasktoask.com".to_string(),
+        _ => return "not pog".to_string(),
+    }
+
+
 }
