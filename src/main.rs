@@ -82,7 +82,7 @@ async fn main() {
 }
 fn get_response(txt: &str) -> String {
     //hard coded for now but will change later pls no bully
-    const CRING_WORDS: [&str; 3] = ["arch btw","garuda","dragon ball legends"];
+    const CRING_WORDS: [&str; 3] = ["arch btw","garuda","dragon ball legends", "roblox"];
     for cring in CRING_WORDS {
     if txt.to_lowercase().contains(&cring) {
     return "you just posted cringe".to_string();
