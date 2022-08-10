@@ -35,30 +35,23 @@ impl EventHandler for Handler
         }
         
         //Holy fuck this code fucking sucks how do I sanitise this PLS HELP THERES NO OBJECTS
-        // if &text.to_lowercase() == "pls embeb"
-        // {
-        //     if let Err(why) = msg.channel_id.send_message(&ctx.http, |m| 
-        //     {
-        //         m.content("this is an embeb")
-        //             .tts(true)
-        //             .embed( |e| 
-        //                     e.title("Really cool title")
-        //                     .description("This will explode")
-        //                     .field("Wow rust is really cool","Idk what I'm doing",false,)
-        //                 )
-        //     }
-        //     ).await 
-        //     {
-        //         println!("Error emebbing : {:?}",why);
-        //     }
-        //     
-        // }
-        // Hopefully a better refactored version of above function only here to showcase how awful
-        // I was
-        if &text.to_lowercase() == "pls embed fr fr"
+        if &text.to_lowercase() == "pls embeb"
         {
-          
-            embedded_message(&ctx,&msg,"Wowowowow","Twitch sub notif!","woolHehe woolHoho","!momentummod");
+            if let Err(why) = msg.channel_id.send_message(&ctx.http, |m| 
+            {
+                m.content("this is an embeb")
+                    .tts(true)
+                    .embed( |e| 
+                            e.title("Really cool title")
+                            .description("This will explode")
+                            .field("Wow rust is really cool","Idk what I'm doing",false,)
+                        )
+            }
+            ).await 
+            {
+                println!("Error emebbing : {:?}",why);
+            }
+            
         }
 
         
@@ -93,30 +86,7 @@ fn get_response(txt: &str) -> String
         _ => return "not pog".to_string(),
     }
 }
-//Embed function starts here (will likely break everything)
-// fn create_embed(title: &str , description: &str, field1: &str , field2: &str ) -> CreateEmbed
-// {
-//     return |e| CreateEmbed
-//     {
-//         e.title(&title).description(&description).field(&field1,&field2,false,)
-//     }
-// }
-//It did break everything
-async fn embedded_message(ctx:&Context, msg: &Message,title: &str, description: &str, field1: &str, field2: &str )
-{
- 
-    if let Err(why) = msg.channel_id.send_message(&ctx.http,|m|
-            {
-                m.content("").tts(false).embed( |e| e.title(&title.to_string()).description(&description.to_string()).field(&field1.to_string(),&field2.to_string(),false,))
-            }).await{ println!("hello {:?}",why); }
 
-}
-
-//Purely for debugging
-fn print_type_of<T>(_: &T) 
-{
-    println!("{}", std::any::type_name::<T>())
-}
 
 #[tokio::main]
 async fn main() {
