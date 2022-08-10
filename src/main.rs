@@ -2,6 +2,7 @@ use std::env;
 
 use serenity::async_trait;
 use serenity::model::channel::Message;
+use serenity::model::channel::Embed;
 use serenity::model::gateway::Ready;
 use serenity::prelude::*;
 
@@ -9,23 +10,12 @@ struct Handler;
 
 #[async_trait]
 impl EventHandler for Handler {
-    // Set a handler for the `message` event - so that whenever a new message
-    // is received - the closure (or function) passed will be called.
-    //
-    // Event handlers are dispatched through a threadpool, and so multiple
-    // events can be dispatched simultaneously.
+
+    //function executed when new message sent
     async fn message(&self, ctx: Context, msg: Message) {
         let text = msg.content.to_string();
         let phrase = get_response(&text);
         
-        // This code was written by idiot (me)
-        // if msg.content == "hello" {
-        //     phrase = "http://nohello.com".to_string();
-        // }
-        // else if msg.content == "help"
-        // {
-        //     phrase = "https://dontasktoask.com/".to_string();
-        // }
         if msg.content == "!help"
         {
             let dm = msg.author.dm(&ctx, |m| m.content("I hate you")).await;
@@ -33,29 +23,68 @@ impl EventHandler for Handler {
                 println!("Couldn't dm the noob: {:?}", why);
             }
         }
-            // Sending a message can fail, due to a network error, an
-            // authentication error, or lack of permissions to post in the
-            // channel, so log to stdout when some error happens, with a
-            // description of it.
+
         if  &phrase != "not pog"
         {
+            //Sending a message can fail, have to handle exceptions 
             if let Err(why) = msg.channel_id.say(&ctx.http, &phrase).await {
                 println!("Error sending message: {:?}", why);
             }
 
         }
+        
+        if &text.to_lowercase() == "pls embeb"
+        {
+            if let Err(why) = msg.channel_id.send_message(&ctx.http, |m| {
+                m.content("this is an embeb")
+                    .tts(true)
+                    .embed( |e| e.title("Really cool title").description("This will explode").field(
+            "Wow rust is really cool",
+            "Idk what I'm doing",
+            false,
+            )
+                        )
+    }
+                           ).await {
+                println!("Error emebbing : {:?}",why);
+            }
+            
+        }
     }
 
-    // Set a handler to be called on the `ready` event. This is called when a
-    // shard is booted, and a READY payload is sent by Discord. This payload
-    // contains data like the current user's guild Ids, current user data,
-    // private channels, and more.
-    //
-    // In this case, just print what the current user's username is.
+    //Handles the upon login event
     async fn ready(&self, _: Context, ready: Ready) {
         println!("{} is connected!", ready.user.name);
     }
 }
+
+fn get_response(txt: &str) -> String {
+    //hard coded for now but will change later pls no bully
+    const CRING_WORDS: [&str;4] = ["arch btw","garuda","dragon ball legends", "roblox"];
+    for cring in CRING_WORDS {
+    if txt.to_lowercase().contains(&cring) {
+    return "you just posted cringe".to_string();
+        } 
+    }
+    match txt.to_ascii_lowercase().as_str() {
+        "hello" | "hi" | "hey" => return "https://nohello.com".to_string(),
+        "help" | "can anyone help?" | "helppp" => return "https://dontasktoask.com".to_string(),
+        _ => return "not pog".to_string(),
+    }
+}
+//Embed function starts here (will likely break everything)
+fn create_embed() 
+{
+    let embed = Embed::fake(|e| {
+        e.title("Really cool title").description("This will explode").field(
+            "Wow rust is really cool",
+            "Idk what I'm doing",
+            false,
+            )
+    });
+    
+}
+
 
 #[tokio::main]
 async fn main() {
@@ -78,19 +107,5 @@ async fn main() {
     // exponential backoff until it reconnects.
     if let Err(why) = client.start().await {
         println!("Client error: {:?}", why);
-    }
-}
-fn get_response(txt: &str) -> String {
-    //hard coded for now but will change later pls no bully
-    const CRING_WORDS: [&str; 3] = ["arch btw","garuda","dragon ball legends", "roblox"];
-    for cring in CRING_WORDS {
-    if txt.to_lowercase().contains(&cring) {
-    return "you just posted cringe".to_string();
-        } 
-    }
-    match txt.to_ascii_lowercase().as_str() {
-        "hello" | "hi" | "hey" => return "https://nohello.com".to_string(),
-        "help" | "can anyone help?" | "helppp" => return "https://dontasktoask.com".to_string(),
-        _ => return "not pog".to_string(),
     }
 }
