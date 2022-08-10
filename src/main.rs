@@ -58,7 +58,7 @@ impl EventHandler for Handler
         if &text.to_lowercase() == "pls embed fr fr"
         {
           
-            embedded_message(&ctx,&msg,"Wowowowow","Twitch sub notif!","woolHehe woolHoho","!momentummod");  
+            embedded_message(&ctx,&msg,"Wowowowow","Twitch sub notif!","woolHehe woolHoho","!momentummod");
         }
 
         
@@ -107,7 +107,7 @@ async fn embedded_message(ctx:&Context, msg: &Message,title: &str, description: 
  
     if let Err(why) = msg.channel_id.send_message(&ctx.http,|m|
             {
-                m.content("").tts(false).embed( |e| e.title(&title).description(&description).field(&field1,&field2,false,))
+                m.content("").tts(false).embed( |e| e.title(&title.to_string()).description(&description.to_string()).field(&field1.to_string(),&field2.to_string(),false,))
             }).await{ println!("hello {:?}",why); }
 
 }
